@@ -1,60 +1,60 @@
-int IR1 = 8;
-int IR2 = 12;
-int IR3 = 13;
-int LDR = 7;
-int led1 = 3;
-int led2 = 5;
-int led3 = 6;
-int val1;
-int val2;
-int val3;
-int val4;
+const int ir1 = 8; 
+const int ir2 = 12; 
+const int ir3 = 13; 
+const int led1 = 2;    
+const int led2 = 3;
+const int led3 = 4;
+const int ldrPin = A0; 
 
-void setup()
-{
-  pinMode(IR1, INPUT);
-  pinMode(IR2, INPUT);
-  pinMode(IR3, INPUT);
-  pinMode(LDR, INPUT);
+void setup() {
+  pinMode(ir1, INPUT);
+  pinMode(ir2, INPUT);
+  pinMode(ir3, INPUT);
   pinMode(led1, OUTPUT);
   pinMode(led2, OUTPUT);
   pinMode(led3, OUTPUT);
+  Serial.begin(9600); 
 }
 
 void loop() {
-  val1 = digitalRead(IR1);
-  val2 = digitalRead(IR2);
-  val3 = digitalRead(IR3);
-  val4 = digitalRead(LDR);
+  int ir1val = digitalRead(ir1);
+  int ir2val = digitalRead(ir2);
+  int ir3val = digitalRead(ir3);
+  int ldrValue = analogRead(ldrPin); 
 
-  if (val1 == 1 && val4 == 0 && val2 == 1 && val3 == 1)
-  {
+  if (ldrValue > 750) { 
+    if (ir1val == LOW && ir2val == HIGH && ir3val == HIGH) {
+      digitalWrite(led1, HIGH);
+      digitalWrite(led2, HIGH);
+      digitalWrite(led3, LOW);
+      Serial.println("Motion detected by IR 1!");
+    } 
+    else if (ir1val == HIGH && ir2val == LOW && ir3val == HIGH) {
+      digitalWrite(led2, HIGH);
+      digitalWrite(led1, LOW);
+      digitalWrite(led3, LOW);
+      Serial.println("Motion detected by IR 2!");
+    } 
+    else if (ir1val == HIGH && ir2val == HIGH && ir3val == LOW) {
+      digitalWrite(led3, HIGH);
+      digitalWrite(led2, HIGH);
+      digitalWrite(led1, LOW);
+      Serial.println("Motion detected by IR 3!");
+    } 
+    else if (ir1val == LOW && ir2val == LOW && ir3val == LOW) {
+      digitalWrite(led3, HIGH);
+      digitalWrite(led2, HIGH);
+      digitalWrite(led1, HIGH);
+      Serial.println("Motion detected by all IRs!");
+    }
+  } 
+  else {
+   
     digitalWrite(led1, LOW);
     digitalWrite(led2, LOW);
     digitalWrite(led3, LOW);
+    //Serial.println("No motion detected or it's too bright.");
   }
-  else if (val1 == 1 && val4 == 1 && val2 == 1 && val3 == 1)
-  {
-    digitalWrite(led1, HIGH);
-    digitalWrite(led2, HIGH);
-    digitalWrite(led3, HIGH);
-  }
-  else if (val1 == 0 && val4 == 1 && val2 == 1 && val3 == 1)
-  {
-    digitalWrite(led1, HIGH);
-    digitalWrite(led2, HIGH);
-    digitalWrite(led3, HIGH);
-  }
-  else if (val1 == 1 && val4 == 1 && val2 == 0 && val3 == 1)
-  {
-    digitalWrite(led1, HIGH);
-    digitalWrite(led2, HIGH);
-    digitalWrite(led3, HIGH);
-  }
-  else if (val1 == 1 && val4 == 1 && val2 == 1 && val3 == 0)
-  {
-    digitalWrite(led1, HIGH);
-    digitalWrite(led2, HIGH);
-    digitalWrite(led3, HIGH);
-  }
+
+  delay(200); 
 }
