@@ -2,8 +2,8 @@ const int ir1 = 8;
 const int ir2 = 10; 
 const int ir3 = 12; 
 const int led1 = 2;    
-const int led2 = 3;
-const int led3 = 4;
+const int led2 = 4;
+const int led3 = 6;
 const int ldrPin = A0; 
 
 void setup() {
