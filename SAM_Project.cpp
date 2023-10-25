@@ -1,6 +1,6 @@
 const int ir1 = 8; 
-const int ir2 = 12; 
-const int ir3 = 13; 
+const int ir2 = 10; 
+const int ir3 = 12; 
 const int led1 = 2;    
 const int led2 = 3;
 const int led3 = 4;
